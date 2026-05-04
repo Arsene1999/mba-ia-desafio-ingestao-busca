@@ -1,4 +1,4 @@
-import os
+import os, time
 from dotenv import load_dotenv
 from langchain_openai import OpenAIEmbeddings, ChatOpenAI
 from langchain_postgres.vectorstores import PGVector
@@ -40,6 +40,8 @@ RESPONDA A "PERGUNTA DO USUÁRIO"
 """
 
 def search_prompt(question):
+  try:
+    inicio = time.perf_counter()
     vector_store = PGVector(
         connection=CONNECTION,
         collection_name=COLLECTION_NAME,
@@ -53,8 +55,15 @@ def search_prompt(question):
     prompt = PromptTemplate.from_template(PROMPT_TEMPLATE)
     prompt_final = prompt.format(contexto=contexto_formatado, pergunta=question)
     
-    print("\n--- RESPOSTA DA IA ---")
+    print("\n--- RESPOSTA DA IA ---\n")
     resposta = llm.invoke(prompt_final)
     
-    print(resposta.content)
-    pass
+    print(resposta.content )
+    fim = time.perf_counter()
+    print(f"Tempo de resposta: {fim - inicio:.2f} segundos\n")
+    return True
+  
+  except Exception as e:
+    print(f"Erro durante a busca: {e}")
+    
+    return False
