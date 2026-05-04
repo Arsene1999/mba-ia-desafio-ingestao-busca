@@ -21,8 +21,9 @@ def ingest_pdf():
 
     text_splitter = RecursiveCharacterTextSplitter(
         chunk_size=1000, 
-        chunk_overlap=100
+        chunk_overlap=150
     )
+    
     meus_chunks_de_texto = text_splitter.split_documents(documentos_inteiros)
     
     print(f"Criados {len(meus_chunks_de_texto)} chunks de texto.")
