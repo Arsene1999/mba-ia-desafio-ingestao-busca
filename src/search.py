@@ -7,7 +7,7 @@ from langchain_core.prompts import PromptTemplate
 load_dotenv()
 
 embeddings = OpenAIEmbeddings()
-llm = ChatOpenAI(model=os.getenv("OPENAI_MODEL"), temperature=0)
+llm = ChatOpenAI(model="gpt-5-nano", temperature=0)
 
 CONNECTION = os.getenv("DATABASE_URL")
 COLLECTION_NAME = os.getenv("PG_VECTOR_COLLECTION_NAME")
